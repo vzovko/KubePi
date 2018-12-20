@@ -6,6 +6,10 @@
 * PowerShell Core
 * APT Packages
   * open-vm-tools-desktop, curl, git
+* Generate SSH key [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/] and add public key to account. Key will later be used for Ansible.
+
+Create SSH key: `ssh-keygen -t rsa -b 4096`
+
 
 ## To Do
 * Raspbian, CentOS?
