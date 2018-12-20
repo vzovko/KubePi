@@ -7,9 +7,6 @@
 * APT Packages
   * open-vm-tools-desktop, curl, git
 
-# Visual Studio Code > GitHub Setup
-[https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/]
-
 ## To Do
 * Raspbian, CentOS?
 * Kubernetes
