@@ -1,0 +1,11 @@
+---
+- hosts: kubepi
+  remote_user: pi
+  become: yes
+  tasks:
+  - name: Install updates via apt
+    apt:
+      update_cache: yes
+      upgrade: full
+      autoclean: yes
+      autoremove: yes

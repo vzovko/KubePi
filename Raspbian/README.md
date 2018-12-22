@@ -9,7 +9,6 @@
 * Anker Powerline Mirco USB 0.3m [https://www.amazon.de/gp/product/B016BEVNK4/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1]
 
 ## Setup
-
 | Hostname | IP | Function |
 | --- | --- | --- |
 | kubepi01 | 192.168.178.10 | Master |
@@ -23,7 +22,6 @@ Place emtpy file named `ssh` on SD boot partition to enable SSH on boot.
 Identify the raspberry's IP addresses from router and log in with user `pi` and default password `raspberry`.
 
 ### Inital configuration with raspi-config
-
 Become root with `sudo -i` and start inital configuration with `raspi-config`.
 
 Modify password via  `Change user password`.
@@ -47,3 +45,5 @@ Disable wlan0 and bluebooth in `/etc/boot.cfg`.
 dtoverlay=pi3-disable-wifi
 dtoverlay=pi3-disable-bt
 ```
+
+`reboot` to finish the intial setup.
