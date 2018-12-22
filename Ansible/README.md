@@ -1,6 +1,6 @@
 # Ansible
 
-# Test Client
+## Test Client
 Raspberry Pi 2 named `dockerpi` running Raspian with IP `192.168.178.5`. The test client is running multiple containers.
 
 ## Install
@@ -18,7 +18,7 @@ ssh-agent bash
 ssh-add ~/.ssh/id_rsa
 ```
 
-Modfy `/etc/ansible/hosts`:
+Modify `/etc/ansible/hosts`:
 ```
 [test]
 192.168.178.5

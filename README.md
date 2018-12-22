@@ -12,7 +12,7 @@ Create SSH key: `ssh-keygen -t rsa -b 4096`
 
 
 ## To Do
-* Raspbian, CentOS?
+* Raspbian
 * Kubernetes
 * Pihole Container
 * Logging & Monitoring (Fluentd, Elk, Prometheus, Grafana?)
