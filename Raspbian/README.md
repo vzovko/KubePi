@@ -20,9 +20,19 @@ Write Raspian Lite image to SD cards.
 
 Place emtpy file named `ssh` on SD boot partition to enable SSH on boot.
 
-Identify the raspberry's IP addresses from router, configure static IPs, disable wlan and set hostname.
+Identify the raspberry's IP addresses from router and log in with user `pi` and default password `raspberry`.
 
-`/etc/dhcpcd.conf`
+### Inital configuration with raspi-config
+
+Become root with `sudo -i` and start inital configuration with `raspi-config`.
+
+Modify password via  `Change user password`.
+
+Expand SD card filesystem via `Advanced Options > Expand Filesystem`.
+
+Set hostname via `Network Options > Hostname > kubepi01`.
+
+Configure static IP for eth0 in `/etc/dhcpcd.conf`.
 
 ```
 interface eth0
@@ -31,11 +41,9 @@ static routers=192.168.178.1
 static domain_name_servers=192.168.178.1
 ```
 
-Login as user `pi` and change the default password with `passwd`.
+Disable wlan0 and bluebooth in `/etc/boot.cfg`.
 
-# TODO
-* Static IP bisher nur auf .10
-* weitere auf Static
-* Wlan deaktivieren
-* Hostnamen setzen
-* Passwort ändern
+```
+dtoverlay=pi3-disable-wifi
+dtoverlay=pi3-disable-bt
+```

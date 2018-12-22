@@ -10,6 +10,9 @@
 
 Create SSH key: `ssh-keygen -t rsa -b 4096`
 
+## NEXT
+* SSH keys zu Pis
+* Ansible test
 
 ## To Do
 * Raspbian

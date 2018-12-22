@@ -34,7 +34,18 @@ ansible all -a "/bin/echo hello"
 ansible test -m shell -a "docker ps" -b
 ```
 
+## After inital Raspberry setup
+Copy SSH Keys to Raspberrys.
+`ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.10`
 
+Modify `/etc/ansible/hosts`:
+```
+[kubepi]
+192.168.178.[10:12]
+
+[kubepi:vars]
+ansible_user=pi
+```
 
 ## Resources
 * [https://docs.ansible.com/ansible/latest/index.html]
