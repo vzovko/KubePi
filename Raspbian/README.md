@@ -47,3 +47,6 @@ dtoverlay=pi3-disable-bt
 ```
 
 `reboot` to finish the intial setup.
+
+## Continue with
+[Ansible Setup](Ansible/README.md)
