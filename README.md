@@ -18,10 +18,10 @@ Generate SSH key [https://help.github.com/articles/generating-a-new-ssh-key-and-
 Generate SSH key: `ssh-keygen -t rsa -b 4096 -C "my@mail.com"`
 
 ## Continue with
-[Raspbian Setup](/tree/master/Raspbian/)
+[Raspbian Setup](https://github.com/vzovko/KubePi/tree/master/Raspbian)
 
 ## To Do
-* Kubernetes
+* Kubernetes [https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975]
 * Pihole Container
 * Logging & Monitoring (Fluentd, Elk, Prometheus, Grafana?)
 

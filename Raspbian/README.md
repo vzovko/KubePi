@@ -51,4 +51,4 @@ dtoverlay=pi3-disable-bt
 `reboot` to finish the intial setup.
 
 ## Continue with
-[Ansible](../tree/master/Ansible/)
+[Ansible](https://github.com/vzovko/KubePi/tree/master/Ansible)
