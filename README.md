@@ -27,3 +27,5 @@ Generate SSH key: `ssh-keygen -t rsa -b 4096 -C "my@mail.com"`
 ## Resources
 * [https://blog.hypriot.com/post/setup-kubernetes-raspberry-pi-cluster/]
 * [https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/]
+* [https://gist.github.com/alexellis/fdbc90de7691a1b9edb545c17da2d975]
+* [https://kubecloud.io/setting-up-a-kubernetes-1-11-raspberry-pi-cluster-using-kubeadm-952bbda329c8]

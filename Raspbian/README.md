@@ -1,12 +1,12 @@
 # Raspbian
 
 ## Hardware
-* 3x Raspberry Pi 3B+ [https://www.rasppishop.de/Raspberry-Pi-3-Model-B-14-GHz-64Bit-Quad-Core]
-* 3x Samsung EVO Plus Micro SDHC 32GB [https://www.amazon.de/gp/product/B06XFSZGCC/ref=oh_aui_detailpage_o00_s02?ie=UTF8&psc=1]
-* Stackable Case [https://www.amazon.de/gp/product/B079HN5YRZ/ref=oh_aui_detailpage_o09_s00?ie=UTF8&psc=1]
-* TP-Link TL-SG105 5-Port Gigabit [https://www.amazon.de/gp/product/B00A128S24/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1]
-* Anker PowerPort 6 PowerSupply [https://www.amazon.de/gp/product/B00PTLSH9G/ref=oh_aui_detailpage_o00_s00?ie=UTF8&psc=1]
-* Anker Powerline Mirco USB 0.3m [https://www.amazon.de/gp/product/B016BEVNK4/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1]
+* [3x Raspberry Pi 3B+](https://www.rasppishop.de/Raspberry-Pi-3-Model-B-14-GHz-64Bit-Quad-Core)
+* [3x Samsung EVO Plus Micro SDHC 32GB](https://www.amazon.de/gp/product/B06XFSZGCC/ref=oh_aui_detailpage_o00_s02?ie=UTF8&psc=1)
+* [Stackable Case](https://www.amazon.de/gp/product/B079HN5YRZ/ref=oh_aui_detailpage_o09_s00?ie=UTF8&psc=1)
+* [TP-Link TL-SG105 5-Port Gigabit](https://www.amazon.de/gp/product/B00A128S24/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1)
+* [Anker PowerPort 6 PowerSupply](https://www.amazon.de/gp/product/B00PTLSH9G/ref=oh_aui_detailpage_o00_s00?ie=UTF8&psc=1)
+* [Anker Powerline Mirco USB 0.3m](https://www.amazon.de/gp/product/B016BEVNK4/ref=oh_aui_detailpage_o00_s01?ie=UTF8&psc=1)
 
 ## Setup
 | Hostname | IP | Function |
@@ -49,4 +49,4 @@ dtoverlay=pi3-disable-bt
 `reboot` to finish the intial setup.
 
 ## Continue with
-[Ansible Setup](Ansible/README.md)
+[Ansible Setup](../Ansible/README.md)
