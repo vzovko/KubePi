@@ -1,4 +1,7 @@
 # KubePi
+This repo is currently considers to be a dumping ground for all the things I want to try out with my Raspberry Pi cluster with ultimately should run Kubernetes and a couple of containers at home. Besides that I want to try out a couple of other things like Ansible and stuff.
+
+![Raspberry Pi Cluster](Images/img1.png)
 
 ## Admin Machine
 * Ubuntu 18 VM
@@ -18,11 +21,9 @@ Generate SSH key: `ssh-keygen -t rsa -b 4096 -C "my@mail.com"`
 [Raspbian Setup](Raspbian/README.md)
 
 ## To Do
-* Raspbian
 * Kubernetes
 * Pihole Container
 * Logging & Monitoring (Fluentd, Elk, Prometheus, Grafana?)
-
 
 ## Resources
 * [https://blog.hypriot.com/post/setup-kubernetes-raspberry-pi-cluster/]

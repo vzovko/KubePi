@@ -2,6 +2,7 @@
 - hosts: kubepi
   remote_user: pi
   become: yes
+  gather_facts: no
   tasks:
   - name: Install updates via apt
     apt:

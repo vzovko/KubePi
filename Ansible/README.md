@@ -33,6 +33,9 @@ Update Raspberrys
 
 `ansible-playbook "/home/valentin/Projects/KubePi/Ansible/install_updates.yml"`
 
+Create SD card image backups
+`ansible-playbook "/home/valentin/Projects/KubePi/Ansible/run_backup.yml"`
+
 ## Resources
 * [https://docs.ansible.com/ansible/latest/index.html]
 * [https://www.thomas-krenn.com/de/wiki/OpenSSH_Public_Key_Authentifizierung_unter_Ubuntu]
