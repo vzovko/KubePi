@@ -15,6 +15,8 @@
 | kubepi02 | 192.168.178.11 | Node 1 |
 | kubepi03 | 192.168.178.12 | Node 2 |
 
+Shared storage will be a NFS share on a Synology NAS.
+
 Write Raspian Lite image to SD cards.
 
 Place emtpy file named `ssh` on SD boot partition to enable SSH on boot.
@@ -22,7 +24,7 @@ Place emtpy file named `ssh` on SD boot partition to enable SSH on boot.
 Identify the raspberry's IP addresses from router and log in with user `pi` and default password `raspberry`.
 
 ### Inital configuration with raspi-config
-Become root with `sudo -i` and start inital configuration with `raspi-config`.
+Become root with `sudo -i` and start initial configuration with `raspi-config`.
 
 Modify password via  `Change user password`.
 
@@ -49,4 +51,4 @@ dtoverlay=pi3-disable-bt
 `reboot` to finish the intial setup.
 
 ## Continue with
-[Ansible Setup](../Ansible/README.md)
+[Ansible](../tree/master/Ansible/)

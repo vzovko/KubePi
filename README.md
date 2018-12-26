@@ -1,5 +1,5 @@
 # KubePi
-This repo is currently considers to be a dumping ground for all the things I want to try out with my Raspberry Pi cluster with ultimately should run Kubernetes and a couple of containers at home. Besides that I want to try out a couple of other things like Ansible and stuff.
+This repo is currently considered to be a dumping ground for all the things I want to try out with my Raspberry Pi cluster which ultimately should run Kubernetes and a couple of containers at home. Besides that I want to try out a couple of other things like Ansible and stuff.
 
 ![Raspberry Pi Cluster](Images/img1.png)
 
@@ -18,7 +18,7 @@ Generate SSH key [https://help.github.com/articles/generating-a-new-ssh-key-and-
 Generate SSH key: `ssh-keygen -t rsa -b 4096 -C "my@mail.com"`
 
 ## Continue with
-[Raspbian Setup](Raspbian/README.md)
+[Raspbian Setup](/tree/master/Raspbian/)
 
 ## To Do
 * Kubernetes
