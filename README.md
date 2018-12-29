@@ -15,9 +15,9 @@ I did not come up with all this by my one. Please refer to repos listed under re
 
 ## Generate SSH key for GitHub an Ansible
 
-Generate SSH key [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/] and add public key to account. Key will later be used for Ansible.
+Generate SSH key [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/] and add the public key to the account. The key will later be used for Ansible.
 
-Generate SSH key: `ssh-keygen -t rsa -b 4096 -C "my@mail.com"`
+Generate SSH key with `ssh-keygen -t rsa -b 4096 -C "my@mail.com"`.
 
 ## Continue with
 [Raspbian Setup](https://github.com/vzovko/KubePi/tree/master/Raspbian)
