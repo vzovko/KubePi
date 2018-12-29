@@ -33,10 +33,28 @@ Update Raspberrys
 
 `ansible-playbook install_updates.yml`
 
-Create SD card image backups
+Create SD card image or TAR backups on NFS share
 
-`ansible-playbook run_backup.yml`
+```
+ansible-playbook run_dd_backup.yml
+ansible-playbook run_tar_backup.yml
+```
+
+Install and configure requirements for Kubernetes
+```
+ansible-playbook install_req.yml
+```
+
+Install Kubernetes
+```
+ansible-playbook install_kube.yml
+```
+
+
+## Continue with
+[Kubernetes](https://github.com/vzovko/KubePi/tree/master/Kubernetes)
 
 ## Resources
 * [https://docs.ansible.com/ansible/latest/index.html]
+* [https://www.ansible.com/resources/webinars-training/introduction-to-ansible]
 * [https://www.thomas-krenn.com/de/wiki/OpenSSH_Public_Key_Authentifizierung_unter_Ubuntu]

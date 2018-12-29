@@ -1,0 +1,65 @@
+---
+- hosts: kubepi
+  remote_user: pi
+  become: yes
+  gather_facts: no
+  vars:
+    docker_install_script: /tmp/installdocker.sh
+
+  tasks:
+  - name: Modify /boot/cmdline.txt
+    replace:
+        path: /boot/cmdline.txt
+        regexp: 'rootwait'
+        replace: 'rootwait cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
+
+  - name: Set timezone to Europe/Berlin
+    timezone:
+        name: Europe/Berlin
+
+  - name: Disable swap
+    shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
+
+  - name: IP tables config for Flannel
+    sysctl:
+      name: net.bridge.bridge-nf-call-iptables
+      value: 1
+      state: present
+      ignoreerrors: yes
+
+  - name: Install APT https transport
+    apt:
+      name: apt-transport-https
+      state: latest
+
+  - name: Check if Docker is already installed
+    stat:
+      path: /usr/bin/docker
+    register: docker_installed
+    ignore_errors: True
+
+  - name: Download Docker install script
+    get_url:
+        dest: "{{ docker_install_script }}"
+        url: https://get.docker.com/
+        mode: 0777
+    when: docker_installed.stat.exists == False
+
+  - name: Install Docker
+    shell: "{{ docker_install_script }}"
+    when: docker_installed.stat.exists == False
+
+  - name: Create group docker
+    group:
+        name: docker
+        state: present
+
+  - name: Add user pi to docker group
+    user:
+      name: pi
+      groups: docker
+      append: yes
+      state: present
+
+  - debug:
+      msg: You must reboot before you can continue with Kubernetes.

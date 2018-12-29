@@ -1,0 +1,26 @@
+---
+- hosts: kubepi
+  remote_user: pi
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Install nfs common
+    apt:
+        name: nfs-common
+        state: present
+
+  - name: Mount nfs share
+    mount:
+        state: mounted
+        path: /mnt/nfs
+        src: 192.168.178.30:/volume1/kube-data
+        fstype: nfs
+
+  - name: Create backup folder
+    file:
+        path: /mnt/nfs/tar-backup
+        state: directory
+
+  - name: Execute backup with tar
+    shell: tar -cpzf /mnt/nfs/tar-backup/{{ ansible_facts['nodename'] }}-{{ ansible_facts.date_time.iso8601_basic_short }}.tar.gz --exclude=/proc --exclude=/tmp --exclude=/mnt --exclude=/dev --exclude=/sys --exclude=/run --exclude=/media --exclude=/var/log --exclude=/var/cache/apt/archives --exclude=/usr/src/linux-headers* --exclude=/home/*/.gvfs --exclude=/home/*/.cache --exclude=/home/*/.local/share/Trash /

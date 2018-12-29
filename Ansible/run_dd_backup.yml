@@ -3,20 +3,24 @@
   remote_user: pi
   become: yes
   gather_facts: yes
+
   tasks:
   - name: Install nfs common
     apt:
         name: nfs-common
         state: present
+
   - name: Mount nfs share
     mount:
         state: mounted
         path: /mnt/nfs
         src: 192.168.178.30:/volume1/kube-data
         fstype: nfs
+
   - name: Create backup folder
     file:
         path: /mnt/nfs/sd-backup
         state: directory
+
   - name: Execute SD card backup with dd
-    shell: dd bs=4M if=/dev/mmcblk0 | gzip -f > /mnt/nfs/sd-backup/{{ ansible_facts['nodename'] }}-{{ ansible_facts.date_time.iso8601_basic_short }}.img.gz
+    shell: dd bs=4M if=/dev/mmcblk0 | gzip -1 -f > /mnt/nfs/sd-backup/{{ ansible_facts['nodename'] }}-{{ ansible_facts.date_time.iso8601_basic_short }}.img.gz
