@@ -57,4 +57,5 @@ ansible-playbook install_kube.yml
 ## Resources
 * [https://docs.ansible.com/ansible/latest/index.html]
 * [https://www.ansible.com/resources/webinars-training/introduction-to-ansible]
-* [https://www.thomas-krenn.com/de/wiki/OpenSSH_Public_Key_Authentifizierung_unter_Ubuntu]
+* [https://kubernetes.io/docs/setup/independent/install-kubeadm/]
+
