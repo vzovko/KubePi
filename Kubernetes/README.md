@@ -3,19 +3,19 @@
 I'll perform the next steps manually and will later create Ansible playbooks. I will use Flannel as pod network add-on.
 
 ## Initialize master
-SSH into Master
+SSH into the master.
 
 `ssh pi@192.168.178.10`
 
-Pull images for kubeadm
+Pull images for kubeadm.
 
 `sudo kubeadm config images pull`
 
-Initialize master
+Initialize master.
 
 `sudo kubeadm init --token-ttl=0 --pod-network-cidr=10.244.0.0/16`
 
-As stated in the output, run the following commands as the regular Pi user
+As stated in the output, run the following commands as the regular Pi user.
 
 ```
 mkdir -p $HOME/.kube
@@ -27,21 +27,21 @@ Save the join command for use on the cluster nodes.
 
 `kubeadm join 192.168.178.10:6443 --token ia7kv4.b1ll2jfk2px14fsm --discovery-token-ca-cert-hash sha256:364ba409f94f328b069c62c2820e6448e685915cbb5a43c226076285f9e5b17c`
 
-Check pods
+Check pods.
 
 `kubectl get pods --all-namespaces`
 
-Install Flannel
+Install Flannel.
 
 `kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml`
 
 ## Join nodes
 
-SSH into Node 1 and 2
+SSH into node 1 and 2.
 
 `ssh pi@192.168.178.11` (.12)
 
-Join cluster
+Join the cluster.
 
 `sudo kubeadm join 192.168.178.10:6443 --token ia7kv4.b1ll2jfk2px14fsm --discovery-token-ca-cert-hash sha256:364ba409f94f328b069c62c2820e6448e685915cbb5a43c226076285f9e5b17c`
 

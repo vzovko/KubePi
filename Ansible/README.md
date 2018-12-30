@@ -29,23 +29,23 @@ ansible kubepi -a "reboot" -b
 ```
 
 ## Run playbooks
-Update Raspberrys
+Update Raspberrys.
 
 `ansible-playbook install_updates.yml`
 
-Create SD card image or TAR backups on NFS share
+Create SD card image or TAR backups on NFS share.
 
 ```
 ansible-playbook run_dd_backup.yml
 ansible-playbook run_tar_backup.yml
 ```
 
-Install and configure requirements for Kubernetes
+Install and configure requirements for Kubernetes.
 ```
 ansible-playbook install_req.yml
 ```
 
-Install Kubernetes
+Install Kubernetes.
 ```
 ansible-playbook install_kube.yml
 ```
