@@ -1,7 +1,7 @@
 # KubePi
 This repo is currently considered to be a dumping ground for all the things I want to try out with my Raspberry Pi cluster which ultimately should run Kubernetes and a couple of containers at home. Besides that I want to try out a couple of other things like Ansible and stuff.
 
-I did not come up with all this by my one. Please refer to repos listed under resources.
+I did not come up with all this by my own. Please refer to repos listed under resources.
 
 ![Raspberry Pi Cluster](Images/img1.png)
 

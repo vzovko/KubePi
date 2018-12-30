@@ -25,6 +25,7 @@
     apt:
       name: "{{ packages }}"
       force: yes
+      state: latest
     vars:
       packages:
       - kubelet
