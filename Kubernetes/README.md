@@ -54,6 +54,25 @@ kubepi02   Ready    <none>   92s   v1.13.1
 kubepi03   Ready    <none>   70s   v1.13.1
 ```
 
+# Configure Admin VM to access the cluster
+Create `.kube` folder in home dir and scp kubeconfig from master to admin vm.
+
+```
+mkdir ~/.kube
+scp pi@192.168.178.10:/home/pi/.kube/config ~/.kube/config
+```
+
+Install kubectl on admin vm with `sudo snap install kubectl --classic`.
+
+Verfiy connectivity to cluster with `kubectl get pods --all-namespaces` and/or `kubectl get nodes`.
+
+## Next
+Dashboard
+[https://github.com/kubernetes/dashboard/blob/master/README.md]
+[https://github.com/kubernetes/dashboard/wiki/Access-control]
+
+NFS Provisioner [https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/README.md]
+
 ## Build an application
 [https://kubernetes.io/docs/tutorials/]
 
