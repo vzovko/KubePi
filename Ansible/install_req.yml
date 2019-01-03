@@ -4,8 +4,8 @@
   become: yes
   gather_facts: no
   vars:
-    docker_install_script: /tmp/installdocker.sh
-#    docker_version: "18.06.1~ce~3-0~raspbian"
+    #docker_install_script: /tmp/installdocker.sh # Docker Convenience Script
+    docker_version: "18.06.1~ce*"
 
   tasks:
   - name: Modify /boot/cmdline.txt
@@ -28,29 +28,58 @@
       state: present
       ignoreerrors: yes
 
-  - name: Install APT https transport
+  - name: Install Docker Requirements
     apt:
-      name: apt-transport-https
+      name: "{{ packages }}"
       state: latest
+    vars:
+      packages:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg2
+        - software-properties-common
 
-  - name: Check if Docker is already installed
-    stat:
-      path: /usr/bin/docker
-    register: docker_installed
-    ignore_errors: True
+  - name: Add Docker apt key
+    apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
 
-  # Or regular way with https://docs.docker.com/install/linux/docker-ce/debian/ ??
+  - name: Add Docker repo
+    apt_repository:
+        repo: deb [arch=armhf] https://download.docker.com/linux/debian stretch stable
+        state: present
 
-  - name: Download Docker install script
-    get_url:
-        dest: "{{ docker_install_script }}"
-        url: https://get.docker.com/
-        mode: 0777
-    when: docker_installed.stat.exists == False
+  - name: Apt update
+    apt:
+      update_cache: yes
+      autoclean: yes
+      autoremove: yes
 
   - name: Install Docker
-    shell: "{{ docker_install_script }}"
-    when: docker_installed.stat.exists == False
+    apt:
+      name: "docker-ce={{ docker_version }}"
+      state: present
+      force: yes
+
+  # Begin - Docker Convenience Scriptm, can only install latest version
+  #- name: Check if Docker is already installed
+  #  stat:
+  #    path: /usr/bin/docker
+  #  register: docker_installed
+  #  ignore_errors: True
+
+  #- name: Download Docker install script
+  #  get_url:
+  #      dest: "{{ docker_install_script }}"
+  #      url: https://get.docker.com/
+  #      mode: 0777
+  #  when: docker_installed.stat.exists == False
+
+  #- name: Install Docker
+  #  shell: "{{ docker_install_script }}"
+  #  when: docker_installed.stat.exists == False
+  # End - Docker Convenience Script
 
   - name: Create group docker
     group:

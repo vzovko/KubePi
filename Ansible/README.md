@@ -44,16 +44,21 @@ ansible-playbook run_dd_backup.yml
 ansible-playbook run_tar_backup.yml
 ```
 
-Install and configure requirements for Kubernetes.
+Install and configure requirements for Kubernetes. *Currently Docker version 18.06.1*
 ```
 ansible-playbook install_req.yml
 ```
 
-Install Kubernetes.
+Install Kubernetes. *Currently version 1.11.6-00*
 ```
 ansible-playbook install_kube.yml
 ```
 
+## Collection of Ad-Hoc Commands
+```
+# Remove Docker
+ansible kubepi -m apt -a "name=docker-ce state=absent purge=yes autoremove=yes force=yes" -b
+```
 
 ## Continue with
 [Kubernetes](https://github.com/vzovko/KubePi/tree/master/Kubernetes)

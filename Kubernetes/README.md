@@ -43,7 +43,7 @@ SSH into node 1 and 2.
 
 Join the cluster.
 
-`sudo kubeadm join 192.168.178.10:6443 --token ia7kv4.b1ll2jfk2px14fsm --discovery-token-ca-cert-hash sha256:364ba409f94f328b069c62c2820e6448e685915cbb5a43c226076285f9e5b17c`
+`sudo kubeadm join 192.168.178.10:6443 --token a2zday.lvpn6yad18ktq8u2 --discovery-token-ca-cert-hash sha256:36e4f87d2ce16000298b63d41e379da32dcd19abc2f7c9ed6a6201bc024fc885`
 
 Run `kubectl get nodes` on the master to verfiy the correct status.
 
@@ -68,34 +68,46 @@ Verfiy connectivity to cluster with `kubectl get pods --all-namespaces` and/or `
 
 ## Install Dashboard
 [https://github.com/kubernetes/dashboard/wiki/Installation]
-
 [https://github.com/kubernetes/dashboard/wiki/Access-control#admin-privileges]
+[https://github.com/kubernetes/dashboard/wiki/Creating-sample-user]
 
-Grant full admin privileges to dashboard's service account (Development Release for ARM).
+Deploy dashboard.
 
-`kubectl create -f dashboard-admin.yaml`
+`kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard-arm.yaml`
 
-Deploy dashboard for ARM.
+Check with `kubectl get pods --all-namespaces` that the pod `kubernetes-dashboard` is running.
 
-`kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard-arm-head.yaml`
+Create admin user and role binding for dashboard user.
 
-Check with `kubectl get pods --all-namespaces` that the pod `kubernetes-dashboard-head` is running.
+`kubectl create -f admin-user.yaml -f admin-role.yaml`
+
+Retreive authentication token for login.
+
+```
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+
+Name:         admin-user-token-q6q9q
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: admin-user
+              kubernetes.io/service-account.uid: 1cb5e912-0f42-11e9-9cfe-b827ebe1339e
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1025 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXE2cTlxIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIxY2I1ZTkxMi0wZjQyLTExZTktOWNmZS1iODI3ZWJlMTMzOWUiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.mqFnRhCHhoV0fLln0GzOleuQnG4BpBP5GZq64bdamZLhxhilVMl1Hp0C5pujIuc0X68QiXoj8wc6FrDCO0Yhgdu2aBiHPTB_-yDvUBMYkpBK6QZZwr4-Yh0Vs5jrrALL__ACrWqgB2Aj03hYo_VzQ6fhv8MCVY7DHhqmopg3JS66fU0dWxTDfL_kzgjw_LPQe6IIgnrpuSIH8e2oJG_HvIdwqMG7uR8oyhrMBOzQ1r8-N4yt-5osNpq87a_oeKms10IQBLWb7mwtliykgDMOXgZeYDK3-kO6cT7-TCjDiBtXMJZZiwUobMP9e8LDqe-Z1zbZkc9uuZeRPnv6DGdQzw
+```
 
 Run `kubectl proxy` to start the local proxy server.
 
-Open URL `http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard-head:/proxy/#/login`.
+Open URL `http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/` and log in with the token.
 
-Skip login to use default service account.
+![Dashboard Login](../Images/dash1.png)
 
-**Nothing works. Wtf?**
-
-[https://github.com/kubernetes/dashboard/wiki/Compatibility-matrix]
-
-Remove it.
-```
-kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard-arm-head.yaml
-kubectl delete -f dashboard-admin.yaml
-```
+![Dashboard Overview](../Images/dash2.png)
 
 ## NFS Dynamic Provisioner for Persitent Volume Claims
 [https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/README.md]
