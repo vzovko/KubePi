@@ -55,7 +55,7 @@ kubepi03   Ready    <none>   70s   v1.13.1
 ```
 
 ## Configure Admin VM to access the cluster
-Create `.kube` folder in home dir and scp kubeconfig from master to admin vm.
+Create `.kube` folder in home dir on admin vm and scp kubeconfig from master to it.
 
 ```
 mkdir ~/.kube
@@ -67,10 +67,6 @@ Install kubectl on admin vm with `sudo snap install kubectl --classic`.
 Verfiy connectivity to cluster with `kubectl get pods --all-namespaces` and/or `kubectl get nodes`.
 
 ## Install Dashboard
-[https://github.com/kubernetes/dashboard/wiki/Installation]
-[https://github.com/kubernetes/dashboard/wiki/Access-control#admin-privileges]
-[https://github.com/kubernetes/dashboard/wiki/Creating-sample-user]
-
 Deploy dashboard.
 
 `kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard-arm.yaml`
@@ -119,7 +115,7 @@ git clone https://github.com/kubernetes-incubator/external-storage.git
 cd external-storage/nfs-client/
 ```
 
-Setup authorization. *(Currently not sure, if this is neccessary in this installation)*
+Setup authorization.
 
 `kubectl create -f deploy/rbac.yaml`
 
@@ -181,8 +177,7 @@ parameters:
 Setup the nfs provisioner.
 
 ```
-kubectl create -f deploy/deployment-arm.yaml
-kubectl create -f deploy/class.yaml
+kubectl create -f deploy/deployment-arm.yaml -f deploy/class.yaml
 ```
 
 Verfiy new StorageClass.
@@ -196,6 +191,28 @@ managed-nfs-storage   nfs-storage   3m1s
 
 **Test Deployment failed, SUCCESS file not created**
 
+## NEW -  Helm
+Install Helm on admin vm and initalize it. Use specific Helm tiller image for arm. [https://github.com/jessestuart/tiller-multiarch]
+
+```
+sudo snap install helm --classic
+helm init --tiller-image=jessestuart/tiller:v2.9.1
+```
+
+## Install NFS Client Provisioner via Helm for Persitent Volume Claims
+Install.
+```
+helm install stable/nfs-client-provisioner --set nfs.server=192.168.178.30 --set nfs.path=/volume1/kube-data/pv
+
+helm install nfs-client-provisioner --set nfs.server=192.168.178.30 --set nfs.path=/volume1/kube-data/pv
+Error: failed to download "nfs-client-provisioner" (hint: running `helm repo update` may help)
+
+```
+
+**Failed**
+
+## Ingress
+Todo
 
 ## Build an application
 [https://kubernetes.io/docs/tutorials/]
@@ -204,3 +221,7 @@ managed-nfs-storage   nfs-storage   3m1s
 ## Resources
 * [https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/]
 * [https://kubernetes.io/docs/reference/kubectl/cheatsheet/]
+* [https://github.com/kubernetes/dashboard/wiki/Installation]
+* [https://github.com/kubernetes/dashboard/wiki/Access-control#admin-privileges]
+* [https://github.com/kubernetes/dashboard/wiki/Creating-sample-user]
+* [https://docs.helm.sh/using_helm/#quickstart-guide]
