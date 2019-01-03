@@ -11,6 +11,7 @@ I did not come up with all this by my own. Please refer to repos listed under re
   * open-vm-tools-desktop, curl, git
 * Additional Tools
   * Visual Studio Code [https://code.visualstudio.com/docs/setup/linux#_installation]
+    * Extensions: Ansible, Bracket Pair Colorizer, Kubernetes, PowerShell, TODO Hightlight, Trailing Spaces, YAML.
   * PowerShell Core [https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6#installation-via-package-repository---ubuntu-1804]
 
 ## Generate SSH key for GitHub an Ansible

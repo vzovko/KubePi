@@ -3,6 +3,8 @@
   remote_user: pi
   become: yes
   gather_facts: no
+  vars:
+    kubernetes_version: 1.11.6-00
 
   tasks:
   - name: Add Google apt key
@@ -25,9 +27,9 @@
     apt:
       name: "{{ packages }}"
       force: yes
-      state: latest
+      state: present
     vars:
       packages:
-      - kubelet
-      - kubeadm
-      - kubectl
+      - "kubelet={{ kubernetes_version }}"
+      - "kubeadm={{ kubernetes_version }}"
+      - "kubectl={{ kubernetes_version }}"

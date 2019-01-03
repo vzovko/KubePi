@@ -3,10 +3,14 @@
 ## Install
 [https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu]
 
-## Get started
-[https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html]
+```
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+sudo apt-get install ansible
+```
 
-## After Raspbian setup
+## Configuration and test
 Copy SSH keys to Raspberrys.
 `ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.10` (.11, .12)
 
@@ -56,6 +60,7 @@ ansible-playbook install_kube.yml
 
 ## Resources
 * [https://docs.ansible.com/ansible/latest/index.html]
+* [https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html]
 * [https://www.ansible.com/resources/webinars-training/introduction-to-ansible]
 * [https://kubernetes.io/docs/setup/independent/install-kubeadm/]
 
