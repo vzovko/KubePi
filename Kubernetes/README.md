@@ -105,118 +105,37 @@ Open URL `http://localhost:8001/api/v1/namespaces/kube-system/services/https:kub
 
 ![Dashboard Overview](../Images/dash2.png)
 
-## NFS Dynamic Provisioner for Persitent Volume Claims
-[https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/README.md]
-
-Clone [external-storage](https://github.com/kubernetes-incubator/external-storage) repository and open the subfolder `nfs-client`.
-
-```
-git clone https://github.com/kubernetes-incubator/external-storage.git
-cd external-storage/nfs-client/
-```
-
-Setup authorization.
-
-`kubectl create -f deploy/rbac.yaml`
-
-Modify `deploy/deployment-arm.yaml` and change the values for `PROVISIONER_NAME`, `NFS_SERVER` and `NFS_PATH`.
-
-```
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: nfs-client-provisioner
----
-kind: Deployment
-apiVersion: extensions/v1beta1
-metadata:
-  name: nfs-client-provisioner
-spec:
-  replicas: 1
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: nfs-client-provisioner
-    spec:
-      serviceAccount: nfs-client-provisioner
-      containers:
-        - name: nfs-client-provisioner
-          image: quay.io/external_storage/nfs-client-provisioner-arm:latest
-          volumeMounts:
-            - name: nfs-client-root
-              mountPath: /persistentvolumes
-          env:
-            - name: PROVISIONER_NAME
-              value: nfs-storage
-            - name: NFS_SERVER
-              value: 192.168.178.30
-            - name: NFS_PATH
-              value: /volume1/kube-data/pv
-      volumes:
-        - name: nfs-client-root
-          nfs:
-            server: 192.168.178.30
-            path: /volume1/kube-data/pv
-
-```
-
-Modify `/deploy/class.yaml` and change value for `provisioner` to the `nfs-storage`.
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: managed-nfs-storage
-provisioner: nfs-storage
-parameters:
-  archiveOnDelete: "false"
-```
-
-Setup the nfs provisioner.
-
-```
-kubectl create -f deploy/deployment-arm.yaml -f deploy/class.yaml
-```
-
-Verfiy new StorageClass.
-```
-kubectl get storageclass
-
-NAME                  PROVISIONER   AGE
-managed-nfs-storage   nfs-storage   3m1s
-
-```
-
-**Test Deployment failed, SUCCESS file not created**
-
-## NEW -  Helm
-Install Helm on admin vm and initalize it. Use specific Helm tiller image for arm. [https://github.com/jessestuart/tiller-multiarch]
+## Helm
+Install Helm on admin vm and initalize it. Use specific Helm tiller image for ARM and a dedicated service account. [https://github.com/jessestuart/tiller-multiarch]
 
 ```
 sudo snap install helm --classic
-helm init --tiller-image=jessestuart/tiller:v2.9.1
+kubectl create -f tiller-rbac.yaml
+helm init --tiller-image=jessestuart/tiller:v2.9.1 --service-account tiller
 ```
 
 ## Install NFS Client Provisioner via Helm for Persitent Volume Claims
 Install.
 ```
-helm install stable/nfs-client-provisioner --set nfs.server=192.168.178.30 --set nfs.path=/volume1/kube-data/pv
-
-helm install nfs-client-provisioner --set nfs.server=192.168.178.30 --set nfs.path=/volume1/kube-data/pv
-Error: failed to download "nfs-client-provisioner" (hint: running `helm repo update` may help)
+helm install --name nfs-prov --set nfs.server=192.168.178.30 --set nfs.path=/volume1/kube-data/pv --set image.repository=quay.io/external_storage/nfs-client-provisioner-arm stable/nfs-client-provisioner
 
 ```
+**Test Deployment failed, SUCCESS file not created**
 
-**Failed**
 
 ## Ingress
 Todo
 
+
 ## Build an application
 [https://kubernetes.io/docs/tutorials/]
 
+
+## Collection of kubectl Commands
+```
+# Run interactive busybox container
+kubectl run -i --tty busybox --image=busybox --restart=Never -- sh 
+```
 
 ## Resources
 * [https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/]
