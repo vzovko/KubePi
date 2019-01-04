@@ -1,0 +1,34 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod0001
+spec:
+  containers:
+  - name: pod0001
+    image: busybox:latest
+    command:
+      - "/bin/sh"
+    args:
+      - "-c"
+      - "touch /mnt/SUCCESS"
+    volumeMounts:
+      - name: mount1
+        mountPath: "/mnt"
+  restartPolicy: "Never"
+  volumes:
+    - name: mount1
+      persistentVolumeClaim:
+        claimName: pvc0001
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc0001
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 10Mi

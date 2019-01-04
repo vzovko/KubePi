@@ -1,8 +1,6 @@
 # Ansible
 
 ## Install
-[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu]
-
 ```
 sudo apt-get update
 sudo apt-get install software-properties-common
@@ -12,7 +10,11 @@ sudo apt-get install ansible
 
 ## Configuration and test
 Copy SSH keys to Raspberrys.
-`ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.10` (.11, .12)
+```
+ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.10
+ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.11
+ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.12
+```
 
 Modify `/etc/ansible/hosts` and add the new Raspberrys to a group named `kubepi`.
 ```
@@ -34,8 +36,9 @@ ansible kubepi -a "reboot" -b
 
 ## Run playbooks
 Update Raspberrys.
-
-`ansible-playbook install_updates.yml`
+```
+ansible-playbook install_updates.yml
+```
 
 Create SD card image or TAR backups on NFS share.
 
@@ -65,6 +68,7 @@ ansible kubepi -m apt -a "name=docker-ce state=absent purge=yes autoremove=yes f
 
 ## Resources
 * [https://docs.ansible.com/ansible/latest/index.html]
+* [https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu]
 * [https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html]
 * [https://www.ansible.com/resources/webinars-training/introduction-to-ansible]
 * [https://kubernetes.io/docs/setup/independent/install-kubeadm/]

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0001
+spec:
+  capacity:
+    storage: 10Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  nfs:
+    path: /volume1/kube-data/pv/pv0001
+    server: 192.168.178.30
+  mountOptions:
+    - soft

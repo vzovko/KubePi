@@ -1,0 +1,35 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod0002
+spec:
+  containers:
+  - name: pod0002
+    image: busybox:latest
+    command:
+      - "/bin/sh"
+    args:
+      - "-c"
+      - "touch /mnt/SUCCESS"
+    volumeMounts:
+      - name: mount2
+        mountPath: "/mnt"
+  restartPolicy: "Never"
+  volumes:
+    - name: mount2
+      persistentVolumeClaim:
+        claimName: pvc0002
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc0002
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: nfs-client
+  resources:
+    requests:
+      storage: 2Mi
+
