@@ -159,11 +159,48 @@ kubectl describe pod pod0002
 
 Check the NFS share folder to see if a subfolder with the name `default-pvc0002-pvc-*` has been created and that it contains a file named `SUCCESS`.
 
-## Build an application
-[https://kubernetes.io/docs/tutorials/]
+## Networking
+There needs to be a load balancer to access applications inside this cluster. I will use MetalLB, because of [this](https://metallb.universe.tf/#why).
+
+### Load Balancer - MetalLB
+Install with Helm.
+```
+helm install --name metallb stable/metallb
+```
+
+Modify the IP address range in `metallb-configmap.yaml` and create the configmap afterwards.
+```
+kubectl create -f metallb-configmap.yaml
+```
+
+Deploy an nginx service and pod.
+```
+kubectl create -f nginx-test.yaml
+```
+
+Check if  `service/nginx-test` has an external IP address assigned to it and that `pod/nginx-test` is running.
+```
+kubectl get svc,pods
+NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)        AGE
+service/kubernetes   ClusterIP      10.96.0.1       <none>            443/TCP        1d
+service/nginx-test   LoadBalancer   10.100.149.92   192.168.178.200   80:30473/TCP   7m
+
+NAME                                                   READY   STATUS    RESTARTS   AGE
+pod/metallb-controller-564dc9b8f9-62q9q                1/1     Running   0          9m
+pod/metallb-speaker-7pbcv                              1/1     Running   0          9m
+pod/metallb-speaker-k4ghv                              1/1     Running   0          9m
+pod/nfs-prov-nfs-client-provisioner-64cd868b87-z5lhn   1/1     Running   3          1d
+pod/nginx-test                                         1/1     Running   0          7m
+
+```
+
+Open the external IP in your browser.
+
+![nginx Text](../Images/nginx1.png)
 
 ## Todo
-Services, Load Balancing, and Networking
+Pihole
+
 
 ## Collection of kubectl Commands
 ```
@@ -178,3 +215,4 @@ kubectl run -i --tty busybox --image=busybox --restart=Never -- sh
 * [https://github.com/kubernetes/dashboard/wiki/Access-control#admin-privileges]
 * [https://github.com/kubernetes/dashboard/wiki/Creating-sample-user]
 * [https://docs.helm.sh/using_helm/#quickstart-guide]
+* [https://metallb.universe.tf]

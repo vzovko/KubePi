@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-test
+  labels:
+    app: nginx-test-app
+spec:
+  ports:
+    - name: nginx-test-http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: nginx-test-app
+  type: LoadBalancer
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-test
+  labels:
+    app: nginx-test-app
+spec:
+  containers:
+  - name: nginx-test
+    image: nginx:latest
+  restartPolicy: "Never"
