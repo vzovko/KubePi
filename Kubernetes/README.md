@@ -134,7 +134,7 @@ kubectl create -f pv0001.yaml
 kubectl get pv
 ```
 
-Create a test pod with an persitent volume claim and verify.
+Create a test pod with an persistent volume claim and verify.
 ```
 kubectl create -f pod0001.yaml
 kubectl get pvc,pv,pods
@@ -159,13 +159,11 @@ kubectl describe pod pod0002
 
 Check the NFS share folder to see if a subfolder with the name `default-pvc0002-pvc-*` has been created and that it contains a file named `SUCCESS`.
 
-## Todo
-Ingress
-
-
 ## Build an application
 [https://kubernetes.io/docs/tutorials/]
 
+## Todo
+Services, Load Balancing, and Networking
 
 ## Collection of kubectl Commands
 ```
