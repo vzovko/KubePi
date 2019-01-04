@@ -180,17 +180,12 @@ kubectl create -f nginx-test.yaml
 
 Check if  `service/nginx-test` has an external IP address assigned to it and that `pod/nginx-test` is running.
 ```
-kubectl get svc,pods
+kubectl get svc,pods nginx-test
 NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)        AGE
-service/kubernetes   ClusterIP      10.96.0.1       <none>            443/TCP        1d
-service/nginx-test   LoadBalancer   10.100.149.92   192.168.178.200   80:30473/TCP   7m
+service/nginx-test   LoadBalancer   10.100.149.92   192.168.178.200   80:30473/TCP   36m
 
-NAME                                                   READY   STATUS    RESTARTS   AGE
-pod/metallb-controller-564dc9b8f9-62q9q                1/1     Running   0          9m
-pod/metallb-speaker-7pbcv                              1/1     Running   0          9m
-pod/metallb-speaker-k4ghv                              1/1     Running   0          9m
-pod/nfs-prov-nfs-client-provisioner-64cd868b87-z5lhn   1/1     Running   3          1d
-pod/nginx-test                                         1/1     Running   0          7m
+NAME             READY   STATUS    RESTARTS   AGE
+pod/nginx-test   1/1     Running   0          36m
 
 ```
 
@@ -200,6 +195,7 @@ Open the external IP in your browser.
 
 ## Todo
 Pihole
+Specifiy IP with https://metallb.universe.tf/usage/#requesting-specific-ips
 
 
 ## Collection of kubectl Commands
