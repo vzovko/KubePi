@@ -122,7 +122,7 @@ kubectl create -f tiller-rbac.yaml
 helm init --tiller-image=jessestuart/tiller:v2.9.1 --service-account tiller
 ```
 
-# Storage
+## Storage
 Shared storage is provided by an NFS share on a Synology NAS with IP `192.168.178.30` and path `/volume1/kube-data/pv`.
 
 ### Manual Persistent Volumes on NFS Share
