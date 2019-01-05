@@ -1,0 +1,117 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pihole-service-tcp
+  labels:
+    app: pihole-app
+  annotations:
+    metallb.universe.tf/allow-shared-ip: pihole
+spec:
+  ports:
+    - name: pihole-http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    - name: pihole-https
+      port: 443
+      protocol: TCP
+      targetPort: 443
+    - name: pihole-dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+  selector:
+    app: pihole-app
+  externalTrafficPolicy: Local
+  type: LoadBalancer
+  loadBalancerIP: 192.168.178.201
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pihole-service-udp
+  labels:
+    app: pihole-app
+  annotations:
+    metallb.universe.tf/allow-shared-ip: pihole
+spec:
+  ports:
+    - name: pihole-dns-udp
+      port: 53
+      protocol: UDP
+      targetPort: 53
+  selector:
+    app: pihole-app
+  externalTrafficPolicy: Local
+  type: LoadBalancer
+  loadBalancerIP: 192.168.178.201
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pihole-pvc-config
+  labels:
+    app: pihole-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: nfs-client
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pihole-deployment
+  labels:
+    app: pihole-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole-app
+  template:
+    metadata:
+      labels:
+        app: pihole-app
+    spec:
+      containers:
+      - name: pihole
+        image: pihole/pihole:4.1.1_armhf
+        env:
+          - name: ServerIP
+            value: 192.168.178.201
+          - name: TZ
+            value: DE
+          - name: WEBPASSWORD
+            value: admin
+          - name: DNS1
+            value: 9.9.9.9
+          - name: DNS2
+            value: 194.150.168.168
+        ports:
+        - name: pihole-http
+          containerPort: 80
+          protocol: TCP
+        - name: pihole-https
+          containerPort: 443
+          protocol: TCP
+        - name: pihole-dns-tcp
+          containerPort: 53
+          protocol: TCP
+        - name: pihole-dns-udp
+          containerPort: 53
+          protocol: UDP
+        volumeMounts:
+          - mountPath: /etc/pihole
+            name: pihole-config-volume
+            subPath: config
+          - mountPath: /etc/dnsmasq.d/
+            name: pihole-config-volume
+            subPath: dnsmasq
+      volumes:
+      - name: pihole-config-volume
+        persistentVolumeClaim:
+          claimName: pihole-pvc-config

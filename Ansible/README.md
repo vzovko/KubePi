@@ -29,9 +29,9 @@ A couple of test.
 
 ```
 ansible kubepi -m ping
-ansible kubepi -a "uptime"
-ansible kubepi -a "poweroff" -b
-ansible kubepi -a "reboot" -b
+ansible kubepi -a uptime
+ansible kubepi -a poweroff -b
+ansible kubepi -a reboot -b
 ```
 
 ## Run playbooks

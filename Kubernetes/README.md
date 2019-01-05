@@ -168,7 +168,7 @@ Install with Helm.
 helm install --name metallb stable/metallb
 ```
 
-Modify the IP address range in `metallb-configmap.yaml` and create the configmap afterwards.
+Modify the IP address range in `metallb-configmap.yaml` and create the configmap afterwards. I'm using a range which I not served by my routers DHCP `192.168.178.200-192.168.178.250`.
 ```
 kubectl create -f metallb-configmap.yaml
 ```
@@ -193,10 +193,58 @@ Open the external IP in your browser.
 
 ![nginx Text](../Images/nginx1.png)
 
-## Todo
-Pihole
-Specifiy IP with https://metallb.universe.tf/usage/#requesting-specific-ips
+## Deploy Workloads
+One of my goals was to get [Pi-hole](https://pi-hole.net/) up an running on my cluster, since I have it already running on a single Rasperry Docker host. More workloads should follow, like MySQL/MariaDB for hosting a Kodi database.
 
+### Pi-hole
+Deploy Pi-hole.
+```
+kubectl create -f pihole.yaml
+```
+The `pihole.yaml` contains two services, one persitent volume claim and one deployment to run one instance of a pihole container.
+
+Just a short explanation:
+* Since loadbalancers do not support support mixed protocols, I have to deploy two services, one for TCP and one for UDP. These services are requesting a specific IP and share them via `metallb.universe.tf/allow-shared-ip`. The parameter `externalTrafficPolicy` has to be set to `Local` so that the container will see the clients real IP address and serve it properly.
+* The Persistent Volume Claim requests a 1 GB volume on the NFS share.
+* The Pi-hole container needs a couple of environment variabales and two volumes mounts. Both point to the same persistent volume, but in different subfolders.
+
+Verfiy.
+```
+kubectl get svc,pods,pvc --selector=app=pihole-app
+NAME                         TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)                                   AGE
+service/pihole-service-tcp   LoadBalancer   10.103.55.195   192.168.178.201   80:30896/TCP,443:31346/TCP,53:31580/TCP   30m
+service/pihole-service-udp   LoadBalancer   10.103.45.163   192.168.178.201   53:31388/UDP                              30m
+
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/pihole-deployment-b54fbb8f7-59hc9   1/1     Running   1          30m
+
+NAME                                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/pihole-pvc-config   Bound    pvc-7cf14759-1136-11e9-8467-b827ebe1339e   1Gi        RWO            nfs-client     30m
+```
+
+Inspect logs.
+```
+kubectl logs pod/pihole-deployment-b54fbb8f7-59hc9 -f
+```
+
+Open Pi-hole with external IP in Browser.
+
+![Pi-hole](../Images/pihole1.png)
+
+I pointed a Windows client on my network to use this Pi-hole instance for DNS lookups and it worked instantly.
+```
+PS C:\> Resolve-DnsName -Name www.heise.de -Type A
+
+Name                                           Type   TTL   Section    IPAddress
+----                                           ----   ---   -------    ---------
+www.heise.de                                   A      12121 Answer     193.99.144.85
+```
+
+Pi-hole Log:
+```
+dnsmasq: query[A] www.heise.de from 192.168.178.31
+dnsmasq: cached www.heise.de is 193.99.144.85
+```
 
 ## Collection of kubectl Commands
 ```
