@@ -154,7 +154,11 @@ kubectl describe pod pod0002
 Check the NFS share folder to see if a subfolder with the name `default-pvc0002-pvc-*` has been created and that it contains a file named `SUCCESS`.
 
 ## Networking
-There needs to be a load balancer to access applications inside this cluster. I will use MetalLB, because of [this](https://metallb.universe.tf/#why).
+I'm using MetalLB as load-balancer to provide IP's from within my private network range for the services. In my case this is a `192.168.178.0/24` network, the IP range for the load-balancer is `192.168.178.200-192.168.178.250`. This range is not served by my routers DHCP.
+
+Maybe later I will provide an example for a services of type `NodePort`.
+
+[Read more about MetalLB](https://metallb.universe.tf/#why) and about [Kubernetes service types](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types).
 
 ### Load Balancer - MetalLB
 Install with Helm.
@@ -162,7 +166,7 @@ Install with Helm.
 helm install --name metallb stable/metallb
 ```
 
-Modify the IP address range in `metallb-configmap.yaml` and create the configmap afterwards. I'm using a range which is not served by my routers DHCP, `192.168.178.200-192.168.178.250`.
+Modify the IP address range in `metallb-configmap.yaml` and create the configmap afterwards.
 ```
 kubectl create -f metallb-configmap.yaml
 ```

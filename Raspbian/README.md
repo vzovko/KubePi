@@ -17,7 +17,7 @@
 
 Shared storage will be a NFS share on a Synology NAS.
 
-Write Raspian Lite image to SD cards. Refer to the Raspberry Pi documentation [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
+Write Raspian Lite image to SD cards. [Refer to the Raspberry Pi documentation](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
 
 Place an emtpy file named `ssh` on SD boot partition to enable SSH on boot.
 
