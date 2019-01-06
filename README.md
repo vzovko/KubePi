@@ -6,7 +6,7 @@ I did not come up with all this by my own. Please refer to Alex Ellis [k8s-on-ra
 ![Raspberry Pi Cluster](Images/img1.png)
 
 ## Admin Machine
-* Ubuntu 18 VM
+* Ubuntu 18.04.1 LTS VM
 * APT Packages
   * open-vm-tools-desktop, curl, git, tmux
 * Additional Tools
@@ -16,7 +16,7 @@ I did not come up with all this by my own. Please refer to Alex Ellis [k8s-on-ra
   * GitKraken
 
 ## Generate SSH key
-Generate SSH key on admin vm. I'll use this one for Ansible and GitHub.
+Generate SSH key on Admin VM. I'll use this one for Ansible and GitHub.
 ```
 ssh-keygen -t rsa -b 4096 -C "my@mail.com"
 ```
@@ -25,9 +25,7 @@ ssh-keygen -t rsa -b 4096 -C "my@mail.com"
 [Raspbian Setup](https://github.com/vzovko/KubePi/tree/master/Raspbian)
 
 ## To Do
-* Kubernetes
-* Pihole Container
-* Logging & Monitoring (Fluentd, Elk, Prometheus, Grafana?)
+* Logging & Monitoring
 
 ## Resources
 * [https://github.com/alexellis/k8s-on-raspbian]

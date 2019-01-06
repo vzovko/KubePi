@@ -1,6 +1,8 @@
 # Ansible
+The management of all Raspberry's should mostly be done with Ansible from the Admin VM.
 
 ## Install
+Install Ansible as described in the [Ansible documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu).
 ```
 sudo apt-get update
 sudo apt-get install software-properties-common
@@ -9,14 +11,14 @@ sudo apt-get install ansible
 ```
 
 ## Configuration and test
-Copy SSH keys to Raspberrys.
+Copy SSH key to Raspberrys.
 ```
 ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.10
 ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.11
 ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.178.12
 ```
 
-Modify `/etc/ansible/hosts` and add the new Raspberrys to a group named `kubepi`.
+Modify `/etc/ansible/hosts` and add the new Raspberry's to a group named `kubepi`.
 ```
 [kubepi]
 192.168.178.[10:12]
@@ -25,8 +27,7 @@ Modify `/etc/ansible/hosts` and add the new Raspberrys to a group named `kubepi`
 ansible_user=pi
 ```
 
-A couple of test.
-
+A couple of test commands.
 ```
 ansible kubepi -m ping
 ansible kubepi -a uptime
@@ -41,7 +42,6 @@ ansible-playbook install_updates.yml
 ```
 
 Create SD card image or TAR backups on NFS share.
-
 ```
 ansible-playbook run_dd_backup.yml
 ansible-playbook run_tar_backup.yml
