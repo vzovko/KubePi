@@ -8,7 +8,7 @@ I did not come up with all this by my own. Please refer to Alex Ellis [k8s-on-ra
 ## Table of content
 
 * [KubePi](https://github.com/vzovko/KubePi#kubepi)
-  * [Admin Machine](https://github.com/vzovko/KubePi#admin-machine)
+  * [Admin VM](https://github.com/vzovko/KubePi#admin-vm)
   * [Generate SSH key](https://github.com/vzovko/KubePi#generate-ssh-key)
 * [Rasbian](https://github.com/vzovko/KubePi/tree/master/Raspbian#raspbian)
   * [Hardware](https://github.com/vzovko/KubePi/tree/master/Raspbian#hardware)
@@ -35,7 +35,7 @@ I did not come up with all this by my own. Please refer to Alex Ellis [k8s-on-ra
     * [Pi-hole](https://github.com/vzovko/KubePi/tree/master/Kubernetes#pi-hole)
   * [Collection of kubectl commands](https://github.com/vzovko/KubePi/tree/master/Kubernetes#collection-of-kubectl-commands)
 
-## Admin Machine
+## Admin VM
 * Ubuntu 18.04.1 LTS VM
 * APT Packages
   * open-vm-tools-desktop, curl, git, tmux
