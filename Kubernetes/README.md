@@ -220,7 +220,7 @@ kubectl delete -f nginx-nodeport.yaml
 ```
 
 
-## Deploy Workloads
+## Workloads
 One of my goals was to get [Pi-hole](https://pi-hole.net/) up an running on my cluster, since I have it already running on a single Rasperry Docker host. More workloads should follow, like MySQL/MariaDB for hosting a Kodi database.
 
 ### Pi-hole

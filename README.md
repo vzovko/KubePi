@@ -5,6 +5,36 @@ I did not come up with all this by my own. Please refer to Alex Ellis [k8s-on-ra
 
 ![Raspberry Pi Cluster](Images/img1.png)
 
+## Table of content
+
+* [KubePi](https://github.com/vzovko/KubePi#kubepi)
+  * [Admin Machine](https://github.com/vzovko/KubePi#admin-machine)
+  * [Generate SSH key](https://github.com/vzovko/KubePi#generate-ssh-key)
+* [Rasbian](https://github.com/vzovko/KubePi/tree/master/Raspbian#raspbian)
+  * [Hardware](https://github.com/vzovko/KubePi/tree/master/Raspbian#hardware)
+  * [Setup](https://github.com/vzovko/KubePi/tree/master/Raspbian#setup)
+  * [Inital configuration with raspi-config](https://github.com/vzovko/KubePi/tree/master/Raspbian#inital-configuration-with-raspi-config)
+* [Ansible](https://github.com/vzovko/KubePi/tree/master/Ansible#ansible)
+  * [Install](https://github.com/vzovko/KubePi/tree/master/Ansible#install)
+  * [Configuration and test](https://github.com/vzovko/KubePi/tree/master/Ansible#configuration-and-test)
+  * [Run playbooks](https://github.com/vzovko/KubePi/tree/master/Ansible#run-playbooks)
+  * [Collection of Ad-Hoc Commands](https://github.com/vzovko/KubePi/tree/master/Ansible#collection-of-ad-hoc-commands)
+* [Kubernetes](https://github.com/vzovko/KubePi/tree/master/Kubernetes#kubernetes)
+  * [Initialize master](https://github.com/vzovko/KubePi/tree/master/Kubernetes#initialize-master)
+  * [Join nodes](https://github.com/vzovko/KubePi/tree/master/Kubernetes#join-nodes)
+  * [Configure Admin VM to access the cluster](https://github.com/vzovko/KubePi/tree/master/Kubernetes#configure-admin-vm-to-access-the-cluster)
+  * [Install Dashboard](https://github.com/vzovko/KubePi/tree/master/Kubernetes#install-dashboard)
+  * [Helm](https://github.com/vzovko/KubePi/tree/master/Kubernetes#helm)
+  * [Storage](https://github.com/vzovko/KubePi/tree/master/Kubernetes#storage)
+    * [Manual Persistent Volumes on NFS Share](https://github.com/vzovko/KubePi/tree/master/Kubernetes#manual-persistent-volumes-on-nfs-share)
+    * [Install NFS Client Provisioner via Helm for Dynamic Volume Provisioning](https://github.com/vzovko/KubePi/tree/master/Kubernetes#install-nfs-client-provisioner-via-helm-for-dynamic-volume-provisioning)
+  * [Networking](https://github.com/vzovko/KubePi/tree/master/Kubernetes#networking)
+    * [Load Balancer - MetalLB](https://github.com/vzovko/KubePi/tree/master/Kubernetes#load-balancer---metallb)
+    * [NodePort Service Example](https://github.com/vzovko/KubePi/tree/master/Kubernetes#nodeport-service-example)
+  * [Workloads](https://github.com/vzovko/KubePi/tree/master/Kubernetes#workloads)
+    * [Pi-hole](https://github.com/vzovko/KubePi/tree/master/Kubernetes#pi-hole)
+  * [Collection of kubectl Commands](https://github.com/vzovko/KubePi/tree/master/Kubernetes#collection-of-kubectl-commands)
+
 ## Admin Machine
 * Ubuntu 18.04.1 LTS VM
 * APT Packages
