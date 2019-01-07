@@ -194,7 +194,7 @@ Delete service and pod.
 kubectl delete -f nginx-test.yaml
 ```
 
-### NodePort Service
+### NodePort Service Example
 This is just an example of a `NodePort` service. I'm using the same nginx test pod specification, but change the service type to `NodePort` and specify a particular portnumber of `31000`. 
 ```
 kubectl create -f nginx-nodeport.yaml
