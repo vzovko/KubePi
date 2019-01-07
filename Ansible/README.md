@@ -57,7 +57,7 @@ Install Kubernetes. *Currently version 1.11.6-00*
 ansible-playbook install_kube.yml
 ```
 
-## Collection of Ad-Hoc Commands
+## Collection of ad-hoc commands
 ```
 # Remove Docker
 ansible kubepi -m apt -a "name=docker-ce state=absent purge=yes autoremove=yes force=yes" -b

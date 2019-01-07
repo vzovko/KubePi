@@ -79,7 +79,7 @@ kubectl get pods --all-namespaces
 kubectl get nodes
 ```
 
-## Install Dashboard
+## Install dashboard
 Deploy dashboard.
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard-arm.yaml
@@ -120,7 +120,7 @@ helm init --tiller-image=jessestuart/tiller:v2.9.1 --service-account tiller
 ## Storage
 Shared storage is provided by an NFS share on a Synology NAS with IP `192.168.178.30` and path `/volume1/kube-data/pv`.
 
-### Manual Persistent Volumes on NFS Share
+### Manual persistent volumes on NFS share
 Create a subfolder on the NFS share named `pv0001`.
 
 Create a persistent volume with 10 Mb and verfify.
@@ -138,7 +138,7 @@ kubectl describe pod pod0001
 
 Check the folder `pv0001` to see if a file named `SUCCESS` has been created.
 
-### Install NFS Client Provisioner via Helm for Dynamic Volume Provisioning
+### Install NFS client provisioner via Helm for dynamic volume provisioning
 Install NFS Client Provisioner and set parameters for NFS server and path, as well as the ARM image to use.
 ```
 helm install --name nfs-prov --set nfs.server=192.168.178.30 --set nfs.path=/volume1/kube-data/pv --set image.repository=quay.io/external_storage/nfs-client-provisioner-arm stable/nfs-client-provisioner
@@ -194,7 +194,7 @@ Delete service and pod.
 kubectl delete -f nginx-test.yaml
 ```
 
-### NodePort Service Example
+### NodePort service example
 This is just an example of a `NodePort` service. I'm using the same nginx test pod specification, but change the service type to `NodePort` and specify a particular portnumber of `31000`. 
 ```
 kubectl create -f nginx-nodeport.yaml
@@ -273,7 +273,7 @@ dnsmasq: query[A] www.heise.de from 192.168.178.31
 dnsmasq: cached www.heise.de is 193.99.144.85
 ```
 
-## Collection of kubectl Commands
+## Collection of kubectl commands
 ```
 # Run interactive busybox container
 kubectl run -i --tty busybox --image=busybox --restart=Never -- sh
