@@ -156,8 +156,6 @@ Check the NFS share folder to see if a subfolder with the name `default-pvc0002-
 ## Networking
 I'm using MetalLB as load-balancer to provide IP's from within my private network range for the services. In my case this is a `192.168.178.0/24` network, the IP range for the load-balancer is `192.168.178.200-192.168.178.250`. This range is not served by my routers DHCP.
 
-Maybe later I will provide an example for a services of type `NodePort`.
-
 [Read more about MetalLB](https://metallb.universe.tf/#why) and about [Kubernetes service types](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types).
 
 ### Load Balancer - MetalLB
@@ -171,7 +169,7 @@ Modify the IP address range in `metallb-configmap.yaml` and create the configmap
 kubectl create -f metallb-configmap.yaml
 ```
 
-Deploy an nginx service and pod.
+Deploy an nginx service and pod for testing.
 ```
 kubectl create -f nginx-test.yaml
 ```
@@ -189,7 +187,38 @@ pod/nginx-test   1/1     Running   0          36m
 
 Open the external IP in your browser.
 
-![nginx Text](../Images/nginx1.png)
+![nginx Test](../Images/nginx1.png)
+
+Delete service and pod.
+```
+kubectl delete -f nginx-test.yaml
+```
+
+### NodePort Service
+This is just an example of a `NodePort` service. I'm using the same nginx test pod specification, but change the service type to `NodePort` and specify a particular portnumber of `31000`. 
+```
+kubectl create -f nginx-nodeport.yaml
+```
+
+Verify.
+```
+kubectl get svc,pods --selector=app=nginx-nodeport-test-app
+NAME                             TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/nginx-nodeport-service   NodePort   10.99.167.90   <none>        80:31000/TCP   1m
+
+NAME                     READY   STATUS    RESTARTS   AGE
+pod/nginx-nodeport-pod   1/1     Running   0          1m
+```
+
+Open with the master or any other nodes IP and port 31000, e.g. `http://192.168.178.10:31000`.
+
+![nginx NodePort](../Images/nginx2.png)
+
+Delete service and pod.
+```
+kubectl delete -f nginx-nodeport.yaml
+```
+
 
 ## Deploy Workloads
 One of my goals was to get [Pi-hole](https://pi-hole.net/) up an running on my cluster, since I have it already running on a single Rasperry Docker host. More workloads should follow, like MySQL/MariaDB for hosting a Kodi database.

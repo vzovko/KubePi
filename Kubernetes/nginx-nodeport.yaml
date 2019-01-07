@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-nodeport-service
+  labels:
+    app: nginx-nodeport-test-app
+spec:
+  ports:
+    - name: nginx-test-http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+      nodePort: 31000
+  selector:
+    app: nginx-nodeport-test-app
+  type: NodePort
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-nodeport-pod
+  labels:
+    app: nginx-nodeport-test-app
+spec:
+  containers:
+  - name: nginx-test
+    image: nginx:latest
+  restartPolicy: "Never"
