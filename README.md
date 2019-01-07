@@ -5,7 +5,7 @@ I did not come up with all this by my own. Please refer to Alex Ellis [k8s-on-ra
 
 ![Raspberry Pi Cluster](Images/img1.png)
 
-## Table of content
+## Table of contents
 
 * [KubePi](https://github.com/vzovko/KubePi#kubepi)
   * [Admin VM](https://github.com/vzovko/KubePi#admin-vm)
